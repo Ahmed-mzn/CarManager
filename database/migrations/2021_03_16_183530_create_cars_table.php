@@ -27,7 +27,7 @@ class CreateCarsTable extends Migration
             $table->double('ht');
             $table->integer('tva')->default(10);
             $table->double('ttc');
-            $table->timestamps();
+            $table->timestamps()->useCurrent();
         });
     }
 

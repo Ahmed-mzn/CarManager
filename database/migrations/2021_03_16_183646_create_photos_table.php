@@ -17,7 +17,7 @@ class CreatePhotosTable extends Migration
             $table->id();
             $table->unsignedBigInteger('car_id');
             $table->string('photo');
-            $table->timestamps();
+            $table->timestamps()->useCurrent();
         });
     }
 

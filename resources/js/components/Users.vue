@@ -19,6 +19,7 @@
                             <th>ID</th>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Contact</th>
                             <th>Type</th>
                             <th>Registered At</th>
                             <th>Modifier</th>
@@ -29,6 +30,7 @@
                             <td>{{user.id}}</td>
                             <td>{{user.name | uperText}}</td>
                             <td>{{user.email}}</td>
+                            <td>{{user.contact}}</td>
                             <td>{{user.type | uperText}}</td>
                             <td>{{user.created_at | myDate}}</td>
                             <td>
@@ -96,7 +98,7 @@
                         :class="{ 'is-invalid': form.errors.has('type') }" class="form-control">
                             <option value="">Select User Role</option>
                             <option value="admin">Admin</option>
-                            <option value="user">User</option>
+                            <option value="client">Client</option>
                             <option value="comptable">Comptable</option>
                             <option value="proprietaire">Proprietaire</option>
                         </select>

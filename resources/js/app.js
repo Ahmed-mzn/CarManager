@@ -71,15 +71,19 @@ import Users from "./components/Users.vue";
 import Developer from "./components/Developer.vue";
 import NotFound from "./components/NotFound.vue";
 import Invoice from "./components/Invoice.vue";
+import AchatCar from "./components/AchatCar.vue";
 import ProprietaireList from "./components/ProprietaireList.vue";
 import ProprietaireDetails from "./components/ProprietaireDetails.vue";
+import CarList from "./components/CarList.vue";
 import Vue from 'vue';
 let routes = [
-    { path: '/dashboard', component: Dashboard},
+    { path: '/dashboard', component: Dashboard, name:"dashboard"},
     { path: '/profile', component: Profile},
     { path: '/users', component: Users},
     { path: '/developer', component: Developer},
-    { path: '/invoice', component: Invoice},
+    { path: '/carList', component: CarList},
+    { path: '/invoice', component: Invoice, name:"invoice"},
+    { path: '/achat', component: AchatCar, name:"achat"},
     { path: '/proprietaire', component: ProprietaireList},
     { path: '/proprietaire/:id', component: ProprietaireDetails},
     { path: '*', component: NotFound}
@@ -96,9 +100,20 @@ const router = new VueRouter({
 Vue.filter('uperText', function(text){
     return text.charAt(0).toUpperCase() + text.slice(1);
 });
+Vue.filter('uper', function(text){
+    return text.toUpperCase();
+});
 
 Vue.filter('myDate', function(created){
     return moment(created).locale('fr').format('LLL');
+});
+
+Vue.filter('Currency', num => {
+    if (!num) {
+        return '0.00';
+    }
+    const number = (num / 1).toFixed(2).replace(' ', '.');
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 });
 
 window.Fire = new Vue();

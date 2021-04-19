@@ -19,7 +19,7 @@ class CreateOperationsTable extends Migration
             $table->string('type');
             $table->string('description');
             $table->double('montant');
-            $table->timestamps();
+            $table->timestamps()->useCurrent();
         });
     }
 

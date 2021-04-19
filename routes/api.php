@@ -6,6 +6,10 @@ use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\CarController;
 use App\Http\Controllers\API\ProprietaireController;
 use App\Http\Controllers\API\OperationsController;
+use App\Http\Controllers\API\ClientController;
+use App\Http\Resources\CarResource;
+use App\Models\Car;
+use App\Models\Operation;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,8 +31,18 @@ Route::resources([
     'car'=> CarController::class,
     'proprietaire'=> ProprietaireController::class,
     'operation'=> OperationsController::class,
-
+    'client'=> ClientController::class,
 ]);
+
 Route::get('profile',[UserController::class,'profile']);
 Route::put('profile', [UserController::class,'UpdateProfile']);
 Route::get('findUser', [UserController::class,'search']);
+
+
+// Route::get('getCar', [CarController::class,'getCar']);
+
+Route::get('/getCar/{id}', function (Request $request, $id) {
+    $car = Car::find($id);
+    $op = Operation::where('car_id', $car->id)->get();
+    return ['car' => $car, 'operations' => $op];
+});
