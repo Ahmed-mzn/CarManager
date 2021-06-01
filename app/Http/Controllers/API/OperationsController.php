@@ -16,7 +16,7 @@ class OperationsController extends Controller
      */
     public function index()
     {
-        //
+        return Operation::latest()->paginate(3);
     }
 
     /**

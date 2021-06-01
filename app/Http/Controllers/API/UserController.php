@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -20,7 +21,7 @@ class UserController extends Controller
         $user = auth('api')->user();
         if($user->type === 'admin'){
 
-            return User::latest()->paginate(5);
+            return User::latest()->paginate(8);
         }
     }
 
@@ -151,6 +152,41 @@ class UserController extends Controller
         }
 
         return $users;
+    }
+
+    public function count(){
+        $users = DB::table('users')->count();
+        $cars = DB::table('cars')->count();
+        $operations = DB::table('operations')->count();
+        $achats = DB::table('achats')->count();
+        $photos = DB::table('photos')->count();
+        $sumHT = DB::table('cars')->sum('ht');
+
+        $venduCars = DB::table('cars')->where('statut', 'vendu')->count();
+        $acquisCars = DB::table('cars')->where('statut', 'en stock')->count();
+        $carsDeleted = DB::table('deletecars')->count();
+
+        $chartjs = array($venduCars, $acquisCars, $carsDeleted);
+
+        $invoices = intval($venduCars)*2 + (intval($acquisCars));
+
+        $countMarque = DB::table('cars')
+            ->select(DB::raw('marque,count(marque) as marque_count'))
+            ->groupBy('marque')
+            ->get();
+
+        return [
+            'users' => $users, 
+            'cars' => $cars, 
+            'operations' => $operations, 
+            'achats' => $achats,
+            'photos' => $photos,
+            'sumht' => $sumHT,
+            'invoices' => $invoices,
+            'acquisCars' => $acquisCars,
+            'countMarque' => $countMarque,
+            'chartjs' => $chartjs
+        ];
     }
 
 }

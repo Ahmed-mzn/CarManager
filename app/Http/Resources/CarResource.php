@@ -28,6 +28,7 @@ class CarResource extends JsonResource
             'ht' => $this->ht,
             'tva' => $this->tva,
             'ttc' => $this->ttc,
+            'created_at' => $this->created_at,
             'photos' => $this->photos,
             'operations' => $this->operations,
         ];

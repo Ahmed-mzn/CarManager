@@ -9,6 +9,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
+<link rel="icon" type="image/png" href="http://127.0.0.1:8000/img/logo.png">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <title>Bourssa</title>
 
@@ -47,8 +48,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-    <img src="./img/logo.png" alt="Bourssa logo" class="brand-image img-circle elevation-3"
+    <a href="http://127.0.0.1:8000/dashboard" class="brand-link">
+    <img src="http://127.0.0.1:8000/img/logo.png" alt="Bourssa logo" class="brand-image img-circle elevation-3"
         style="opacity: .8">
     <span class="brand-text font-weight-light"> Bourssa</span>
     </a>
@@ -58,10 +59,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-        <img src="./img/profile.png" class="img-circle elevation-2" alt="User Image">
+        <img src="http://127.0.0.1:8000/img/profile.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-        <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+        <a href="http://127.0.0.1:8000/profile" class="d-block">{{ Auth::user()->name }}</a>
         </div>
     </div>
 
@@ -87,24 +88,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </p>
             </a>
             <ul class="nav nav-treeview">
-            
+            @can('isAdmin')
             <li class="nav-item">
                 <router-link to="/users" class="nav-link">
-                    <i class="fas fa-users nav-icon"></i>
+                    <i class="fas fa-users nav-icon teal"></i>
                     <p>Users</p>
                 </router-link>
             </li>
+            @endcan
             <li class="nav-item">
                 <router-link to="/proprietaire" class="nav-link">
-                    <i class="fas fa-users nav-icon"></i>
+                    <i class="fas fa-users nav-icon purple"></i>
                     <p>Proprietaire</p>
-                </router-link>
-            </li>
-            
-            <li class="nav-item">
-                <router-link to="/invoice" class="nav-link">
-                    <i class="fas fa-file-invoice-dollar nav-icon"></i>
-                    <p>Invoice</p>
                 </router-link>
             </li>
             </ul>
@@ -118,10 +113,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </router-link>
         </li>
         <li class="nav-item">
-            <router-link to="/developer" class="nav-link">
-                <i class="nav-icon fa fa-cogs"></i>
+            <router-link to="/cars" class="nav-link">
+                <i class="nav-icon fa fa-car cyan"></i>
                 <p>
-                    Developer
+                    Cars
                 </p>
             </router-link>
         </li>
@@ -165,10 +160,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <footer class="main-footer">
     <!-- To the right -->
     <div class="float-right d-none d-sm-inline">
-    Anything you want
+    
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2020-2021.</strong> All rights reserved.
 </footer>
 </div>
 <!-- ./wrapper -->
