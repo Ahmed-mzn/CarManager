@@ -31,6 +31,10 @@ class AuthServiceProvider extends ServiceProvider
             return $user->type === 'admin';
         });
 
+        Gate::define('isComptable', function(User $user){
+            return $user->type === 'comptable';
+        });
+
         Passport::routes();
 
     }

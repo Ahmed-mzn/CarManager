@@ -17,7 +17,7 @@ class ProprietaireController extends Controller
     {
         $users = User::where(function($query){
             $query->where('type','LIKE',"%proprietaire%");
-        })->paginate(5);
+        })->paginate(8);
         return $users;
     }
 

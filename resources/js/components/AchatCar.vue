@@ -13,9 +13,9 @@
                     <!-- /.col -->
                 </div>
                 <!-- info row -->
-                <div class="row invoice-info" wfd-id="18">
+                <div class="row invoice-info mt-3" wfd-id="18">
                     <div class="col-sm-4 invoice-col" wfd-id="21">
-                    From
+                    
                     <address>
                         <strong>BouressaTi, Inc.</strong><br>
                         795 Rue Al Quds, Appt 600<br>
@@ -26,7 +26,7 @@
                     </div>
                     <!-- /.col -->
                     <div class="col-sm-4 invoice-col" wfd-id="20">
-                    Client Info
+                    Proprietaire Info
                     <address>
                         <strong>{{client.name | uperText}}</strong><br>
                         {{client.bio}}<br>
@@ -38,9 +38,9 @@
                     <div class="col-sm-4 invoice-col" wfd-id="19">
                     <b>Invoice #007612</b><br>
                     <br>
-                    <b>Order ID:</b> 4F3S8J<br>
-                    <b>Payment Due:</b> 2/22/2014<br>
-                    <b>Account:</b> 968-34567
+                    <b>Order ID:</b> OD0006<br>
+                    <b>Payment Due:</b> {{dateNow | time}}<br>
+                    <!-- <b>Account:</b> 968-34567 -->
                     </div>
                     <!-- /.col -->
                 </div>
@@ -63,7 +63,7 @@
                                     <td>{{car.marque | uper}}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Type</th>
+                                    <th scope="row">Modèle</th>
                                     <td>{{car.type | uper}}</td>
                                 </tr>
                                 <tr>
@@ -72,7 +72,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">Description</th>
-                                    <td>{{car.description}}</td>
+                                    <td style="white-space: pre;">{{car.description}}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Dedouaner</th>
@@ -81,6 +81,10 @@
                                 <tr v-if="car.dedouaner">
                                     <th scope="row">Prix dedouanement</th>
                                     <td>{{car.prixDedouanement | Currency}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Prix HT</th>
+                                    <td>{{car.ht | Currency}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -91,32 +95,34 @@
 
                 <div class="row" wfd-id="12">
                     <!-- accepted payments column -->
-                    <div class="col-6" wfd-id="15">
+                    <div class="col-5" wfd-id="15">
                     <p class="lead">Payment Methods:</p>
                     <img src="/img/visa.png" alt="Visa">
                     <img src="/img/mastercard.png" alt="Mastercard">
                     <img src="/img/paypal2.png" alt="Paypal">
                     <b class="badge badge-pill badge-success">CASH</b>
                     <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
-                        Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem
-                        plugg
-                        dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
+                        Different type de peymant peut etre etablire
                     </p>
                     </div>
                     <!-- /.col -->
-                    <div class="col-6" wfd-id="13">
-                    <p class="lead">Amount Due 2/22/2014</p>
+                    <div class="col-7" wfd-id="13">
+                    <p class="lead">Amount Due {{dateNow | time}}</p>
 
                     <div class="table-responsive" wfd-id="14">
                         <table class="table">
                         <tbody>
+                        <tr>
+                            <th>Prix HT</th>
+                            <td>{{car.ht | Currency}} MRU</td>
+                        </tr>
                         <tr v-if="car.dedouaner">
-                            <th>Prix Dedouanement :</th>
+                            <th>Prix Dedouanement</th>
                             <td>{{car.prixDedouanement | Currency}} MRU</td>
                         </tr>
                         <tr>
-                            <th>Prix TTC:</th>
-                            <td>{{car.ttc - car.ht+(car.ht*(car.tva/100)) | Currency}} MRU</td>
+                            <th>Prix TTC</th>
+                            <td>{{car.ttc - (car.ht*(car.tva/100)) | Currency}} MRU</td>
                         </tr>
                         </tbody></table>
                     </div>
@@ -129,12 +135,12 @@
                 <div class="row no-print" wfd-id="10">
                     <div class="col-12" wfd-id="11">
                     <a href="#" @click="print()" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
-                    <button type="button" class="btn btn-success float-right" wfd-id="110"><i class="far fa-credit-card"></i> Submit
+                    <!-- <button type="button" class="btn btn-success float-right" wfd-id="110"><i class="far fa-credit-card"></i> Submit
                         Payment
                     </button>
                     <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;" wfd-id="109">
                         <i class="fas fa-download"></i> Generate PDF
-                    </button>
+                    </button> -->
                     </div>
                 </div>
             </div>

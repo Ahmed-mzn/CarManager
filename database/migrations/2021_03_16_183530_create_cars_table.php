@@ -22,12 +22,12 @@ class CreateCarsTable extends Migration
             $table->integer('annee');
             $table->string('description');
             $table->string('statut');
-            $table->boolean('dedouaner');
+            $table->tinyInteger('dedouaner');
             $table->double('prixDedouanement');
             $table->double('ht');
             $table->integer('tva')->default(10);
             $table->double('ttc');
-            $table->timestamps()->useCurrent();
+            $table->timestamps();
         });
     }
 

@@ -18,7 +18,7 @@ class CarController extends Controller
      */
     public function index()
     {
-        return CarResource::collection(Car::with('photos', 'operations')->paginate(5));
+        return CarResource::collection(Car::with('photos', 'operations')->orderBy('created_at', 'DESC')->paginate(5));
     }
 
     /**
@@ -40,14 +40,14 @@ class CarController extends Controller
             'tva' => 'required|integer',
         ]);
 
-        \DB::table('cars')->insertGetId(array(
+        $car_id = \DB::table('cars')->insertGetId(array(
             'numserie' => $request['numserie'],
             'user_id' => $request['user_id'],
             'marque' => $request['marque'],
             'type' => $request['type'],
             'annee' => $request['annee'],
             'description' => $request['description'],
-            'statut' => $request['statut'],
+            'statut' => 'en stock',
             'dedouaner' => $request['dedouaner'],
             'prixDedouanement' => $request['prixDedouanement'],
             'ht' => $request['ht'],
@@ -78,7 +78,18 @@ class CarController extends Controller
      */
     public function show($id)
     {
-        return CarResource::collection(Car::with('photos', 'operations')->paginate(5))->where('user_id', $id);
+        // return CarResource::collection(Car::with('photos', 'operations')->paginate(5))->where('user_id', $id);
+        $cars = Car::all()->where('user_id', $id);
+        $data = array();
+        foreach($cars as $car){
+            $operations = Operation::all()->where('car_id', $car['id']);
+            $car['operations'] = $operations;
+
+            $photos = Photo::all()->where('car_id', $car['id']);
+            $car['photos'] = $photos;
+            $data[] = $car;
+        }
+        return $data;
     }
 
     /**
@@ -112,6 +123,22 @@ class CarController extends Controller
     }
 
     public function getCar($id){
-        return CarResource::collection(Car::with('operations')->paginate(10))->where('id', $id);
+        return Car::findOrFail(3);
     }
+
+    public function search(){
+        if ($search = \Request::get('q')) {
+            $cars = CarResource::collection(Car::where(function($query) use ($search){
+                $query->where('marque','LIKE',"%$search%")
+                        ->orWhere('type','LIKE',"%$search%")
+                        ->orWhere('description','LIKE',"%$search%");
+            })->with('operations', 'photos')->paginate(5));
+        }else {
+            return CarResource::collection(Car::with('photos', 'operations')->orderBy('annee', 'DESC')->paginate(5));
+        }
+
+        return $cars;
+    }
+
+
 }

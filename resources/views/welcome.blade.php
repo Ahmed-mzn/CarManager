@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <link rel="stylesheet" href="/css/app.css">
         <title>Laravel</title>
 
         <!-- Fonts -->
@@ -72,27 +72,32 @@
                     @else
                         <a href="{{ route('login') }}">Login</a>
 
-                        @if (Route::has('register'))
+                        {{-- @if (Route::has('register'))
                             <a href="{{ route('register') }}">Register</a>
-                        @endif
+                        @endif --}}
                     @endauth
                 </div>
             @endif
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+            <div class="content mt-4">
+                <div class="d-flex mt-2">
+                    <div class="p-2">
+                        <h1>HOME PAGE</h1>
+                        <p>
+                            Site web BourSsaTi. <br>
+                            Toute Ce qui concern les Voitures
+                            Neuf et occasion
+                        </p>
+                    </div>
+                    <div class="p-2 ml-auto"><img width="80%" height="80%" src="http://127.0.0.1:8000/img/back.svg"></div>
                 </div>
             </div>
         </div>
+        <div class="content" id="app">
+            <div class="container-fluid">
+                <router-view></router-view>
+            </div>
+        </div>
+        <script src="/js/app.js"></script>
     </body>
 </html>

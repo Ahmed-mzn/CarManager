@@ -4,7 +4,7 @@
             <div class="col-md-12  mt-5" wfd-id="24">
                 <div class="card" wfd-id="25">
                 <div class="card-header" wfd-id="31">
-                    <h3 class="card-title">Users Table list</h3>
+                    <h3 class="card-title">Tabe des utilisateurs</h3>
 
                     <div class="card-tools" wfd-id="32">
                         <button class="btn btn-success" @click="newModal">
@@ -17,7 +17,7 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
+                            <th>Nom</th>
                             <th>Email</th>
                             <th>Contact</th>
                             <th>Type</th>
@@ -73,30 +73,30 @@
                 <form @submit.prevent="editmode ? updateUser() : createUser()">
                 <div class="modal-body">
                     <div class="form-group">
-                        <input v-model="form.name" type="text" name="name" placeholder="Name" 
+                        <input v-model="form.name" type="text" name="name" placeholder="Nom" 
                         :class="{ 'is-invalid': form.errors.has('name') }" class="form-control">
                         <has-error :form="form" field="name"></has-error>
                     </div>
                     <div class="form-group">
-                        <input v-model="form.email" type="email" name="email" placeholder="Email Adress"
+                        <input v-model="form.email" type="email" name="email" placeholder="Email Adresse"
                         :class="{ 'is-invalid': form.errors.has('email') }" class="form-control">
                         <has-error :form="form" field="email"></has-error>
                     </div>
                     <div class="form-group">
-                        <input v-model="form.contact" type="text" name="contact" placeholder="User Contact"
+                        <input v-model="form.contact" type="text" name="contact" placeholder="Utilisateur Contact"
                         :class="{ 'is-invalid': form.errors.has('contact') }" class="form-control">
                         <has-error :form="form" field="contact"></has-error>
                     </div>
                     <div class="form-group">
                         <textarea v-model="form.bio" type="text" id="bio" name="bio" 
-                        placeholder="short bio for user (Opional)"
+                        placeholder="Description de l'utilisateur (Opitionnel)"
                         :class="{ 'is-invalid': form.errors.has('bio') }" class="form-control"></textarea>
                         <has-error :form="form" field="bio"></has-error>
                     </div>
                     <div class="form-group">
                         <select v-model="form.type" id="type" name="type" placeholder="short"
                         :class="{ 'is-invalid': form.errors.has('type') }" class="form-control">
-                            <option value="">Select User Role</option>
+                            <option value="">Choisir User Role</option>
                             <option value="admin">Admin</option>
                             <option value="client">Client</option>
                             <option value="comptable">Comptable</option>
@@ -161,8 +161,8 @@
                 .then(() => {
                     $('#addNew').modal('hide');
                     Swal.fire(
-                    'Updated!',
-                    'Your infomations has been updated.',
+                    'Modifier!',
+                    'Informations modifier avec success.',
                     'success'
                     )
                     this.$Progress.finish();
@@ -186,26 +186,26 @@
             },
             deleteUser(id){
                 Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
+                    title: 'Vous êtes sûr?',
+                    text: "Provoque la suppression définitivement!",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
+                    confirmButtonText: 'Oui, supprimer!'
                 }).then((result) => {
                     if(result.value) {
                         //envoi request to server
                         this.form.delete('api/user/'+id).then(() => {
 
                             Swal.fire(
-                            'Deleted!',
-                            'Your file has been deleted.',
+                            'Supprimer!',
+                            'Utilisateru à été supprimer.',
                             'success'
                             )
                             Fire.$emit('AfterCreate');
                         }).catch(() => {
-                            Swal.fire("Failed!", "THere was something wronge.", "warning");
+                            Swal.fire("Failed!", "There was something wronge.", "warning");
                         })
                     }
                 })

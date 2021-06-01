@@ -1,55 +1,59 @@
 <template>
     <div class="container">
-        <div class="row" wfd-id="23">
-            <div class="col-12 mt-5" wfd-id="24">
-                <div class="card" wfd-id="25">
-                <div class="card-header" wfd-id="31">
-                    <h3 class="card-title">Table de Proprietaire</h3>
-                    <div class="card-tools" wfd-id="32">
-                        <button class="btn btn-success" @click="newModal">
-                            Add New <i class="fa fa-user-plus fa-fw"></i></button>
+        <transition
+            enter-active-class="animate__animated animate__fadeIn"
+            leave-active-class="animate__animated animate__fadeOut">
+            <div class="row animate__animated animate__fadeIn" wfd-id="23">
+                <div class="col-12 mt-5" wfd-id="24">
+                    <div class="card" wfd-id="25">
+                    <div class="card-header" wfd-id="31">
+                        <h3 class="card-title">Table de Proprietaire</h3>
+                        <div class="card-tools" wfd-id="32">
+                            <button class="btn btn-success" @click="newModal">
+                                Add New <i class="fa fa-user-plus fa-fw"></i></button>
+                        </div>
                     </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0" wfd-id="26">
+                        <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nom</th>
+                                <th>Email</th>
+                                <th>Contact</th>
+                                <th>Registered At</th>
+                                <th>Modifier</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="pro in proprietaires.data" :key="pro.id">
+                                <td>{{pro.id}}</td>
+                                <td>{{pro.name | uperText}}</td>
+                                <td>{{pro.email}}</td>
+                                <td>{{pro.contact}}</td>
+                                <td>{{pro.created_at | myDate}}</td>
+                                <td>
+                                    <a href="#" @click="editModal(pro)"><i class="fas fa-edit blue"></i></a>/
+                                    <a href="#" @click="deleteUser(pro.id)"><i class="fas fa-trash red"></i></a>
+                                </td>
+                                <td>
+                                    <router-link @click="details(pro)" class="btn btn-sm btn-outline-info" 
+                                    :to="'/proprietaire/' + pro.id">
+                                        <i class="fas fa-angle-double-right"></i> Details
+                                    </router-link>
+                                </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
                 </div>
-                <!-- /.card-header -->
-                <div class="card-body table-responsive p-0" wfd-id="26">
-                    <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Contact</th>
-                            <th>Registered At</th>
-                            <th>Modifier</th>
-                            <th>Details</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="pro in proprietaires.data" :key="pro.id">
-                            <td>{{pro.id}}</td>
-                            <td>{{pro.name | uperText}}</td>
-                            <td>{{pro.email}}</td>
-                            <td>{{pro.contact}}</td>
-                            <td>{{pro.created_at | myDate}}</td>
-                            <td>
-                                <a href="#" @click="editModal(pro)"><i class="fas fa-edit blue"></i></a>/
-                                <a href="#" @click="deleteUser(pro.id)"><i class="fas fa-trash red"></i></a>
-                            </td>
-                            <td>
-                                <router-link @click="details(pro)" class="btn btn-sm btn-outline-info" 
-                                :to="'/proprietaire/' + pro.id">
-                                    <i class="fas fa-angle-double-right"></i> Details
-                                </router-link>
-                            </td>
-                        </tr>
-                    </tbody>
-                    </table>
-                </div>
-                <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
             </div>
-        </div>
+        </transition>
         <!-- Modal -->
         <div class="modal fade" id="addNew" tabindex="-1" role="dialog" aria-labelledby="addNewLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -139,26 +143,26 @@
             },
             deleteUser(id){
                 Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
+                    title: 'Vous êtes sûr?',
+                    text: "Provoque la suppression définitivement!",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
+                    confirmButtonText: 'Oui, supprimer!'
                 }).then((result) => {
                     if(result.value) {
                         //envoi request to server
                         this.form.delete('api/proprietaire/'+id).then(() => {
 
                             Swal.fire(
-                            'Deleted!',
-                            'Your file has been deleted.',
+                            'Supprimer!',
+                            'Utilisateru à été supprimer.',
                             'success'
                             )
                             Fire.$emit('AfterCreate');
                         }).catch(() => {
-                            Swal.fire("Failed!", "THere was something wronge.", "warning");
+                            Swal.fire("Failed!", "There was something wronge.", "warning");
                         })
                     }
                 })
@@ -188,8 +192,8 @@
                 .then(() => {
                     $('#addNew').modal('hide');
                     Swal.fire(
-                    'Updated!',
-                    'Your infomations has been updated.',
+                    'Modifier!',
+                    'Informations modifier avec success.',
                     'success'
                     )
                     this.$Progress.finish();
@@ -218,6 +222,9 @@
         },
         mounted() {
             this.loadUsers();
+            Fire.$on('AfterCreate', () => {
+                this.loadUsers();
+            });
         }
     }
 </script>
